@@ -1,0 +1,95 @@
+/* Small motion helpers. All CSS-only and switched off by prefers-reduced-motion. */
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes ping-ring {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple {
+  from {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.4;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+@layer components {
+  /* Looping row — duplicate the children once and set --marquee-duration on the wrapper. */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee var(--marquee-duration, 40s) linear infinite;
+  }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+  .marquee-mask {
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  /* Flat card: hairline border, border picks up the accent on hover. */
+  .card {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    transition: border-color 0.3s var(--ease-lamp);
+  }
+  a:hover > .card,
+  .card:hover {
+    border-color: color-mix(in oklab, var(--accent) 55%, transparent);
+  }
+
+  .ripple-dot {
+    position: absolute;
+    width: 220%;
+    aspect-ratio: 1;
+    border-radius: 9999px;
+    pointer-events: none;
+    background: rgb(255 255 255 / 0.35);
+    animation: ripple 0.6s var(--ease-lamp) forwards;
+  }
+}
+
+/* Night/day circular wipe (View Transitions API). The JS animates clip-path on the new snapshot. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .marquee-track {
+    animation: none !important;
+  }
+}

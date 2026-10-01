@@ -1,0 +1,13 @@
+node_modules
+dist
+.vite
+.env
+.env.local
+.env.*.local
+.DS_Store
+*.log
+coverage
+.claude/
+
+# Personal and source files (CV with phone number, original uploads) — never commit
+private/

@@ -1,0 +1,2 @@
+# Netlify / Cloudflare Pages: send every route to the single-page app (deep links like /projects/my-app).
+/*  /index.html  200

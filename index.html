@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>__SITE_TITLE__</title>
+    <meta name="description" content="__SITE_DESCRIPTION__" />
+    <meta name="theme-color" content="#15111C" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="__SITE_URL__/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="__SITE_TITLE__" />
+    <meta property="og:description" content="__SITE_DESCRIPTION__" />
+    <meta property="og:url" content="__SITE_URL__/" />
+    <meta property="og:image" content="__SITE_URL__/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Apply the saved theme before first paint so there is no flash. Night is the default. -->
+    <script>
+      try {
+        var saved = localStorage.getItem('theme')
+        document.documentElement.dataset.theme = saved === 'day' ? 'day' : 'night'
+        if (saved === 'day') {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#FBF5E8')
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
